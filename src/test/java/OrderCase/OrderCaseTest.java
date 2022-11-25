@@ -1,4 +1,4 @@
-package TestCase;
+package OrderCase;
 
 import org.junit.After;
 import org.junit.Test;
@@ -7,7 +7,6 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.List;
@@ -15,20 +14,20 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class PraktikumTest {
+public class OrderCaseTest {
     private WebDriver driver;
     private final String name;
     private final String secondName;
     private final String address;
     private final String telephonenumber;
     private final String metroStation;
-    private final String dateOrder; //Дату необходимо вводить в формате 00.00.0000
-    private final String daysForRent; //Дни необходимо использовате те, которые в списке выбора на сайте
-    private final String color; //Цвет выбирается из чекбокса на сайте
+    private final String dateOrder;
+    private final String daysForRent;
+    private final String color;
     private final String comment;
     private final boolean checkResultTest;
 
-    public PraktikumTest(String name, String secondName, String address, String telephonenumber, String metroStation, String dateOrder, String daysForRent, String color, String comment, boolean checkResultTest) {
+    public OrderCaseTest(String name, String secondName, String address, String telephonenumber, String metroStation, String dateOrder, String daysForRent, String color, String comment, boolean checkResultTest) {
         this.name = name;
         this.secondName = secondName;
         this.address = address;
@@ -84,14 +83,10 @@ public class PraktikumTest {
         //Нажимаем кнопку согласия на заказ
         finallFormOrderPage.clickYesButtonForOrder();
         //___________________________________________________________
-
         //Тест будет выполнен, если мы обнаружим форму с сообщением о том, что заказ оформлен
         List<WebElement> elements = driver.findElements(By.xpath(".//button[text()='Посмотреть статус']"));
         assertEquals(checkResultTest, elements.size() != 0);
-
     }
-
-
     @After
     public void teardown() {
         // Закрой браузер

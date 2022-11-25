@@ -1,10 +1,7 @@
-package TestCase;
+package OrderCase;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class FinallFormOrderPage {
     private WebDriver driver;
@@ -21,9 +18,4 @@ public class FinallFormOrderPage {
         driver.findElement(yesButtonForOrder).click();
     }
 
-    /*Метод куда будет добавлена как элемент кнопка заказа
-    public List<WebElement> clickCheckStatusOrder(){
-        List<WebElement> elements = driver.findElements(checkStatusOrder);
-        return elements;
-    }*/
 }
