@@ -9,10 +9,10 @@ public class HomePageQuestion {
     private WebDriver driver;
     //Локатор для куки кнопки
     private By cookieButton = By.className("App_CookieButton__3cvqF");
-    //Локатор для вопроса - Сколько это стоит? И как оплатить?
-    private String firstQuestion = ".//div[@class='accordion__heading'][%s]";
-    //Локатор для ответа на вопрос firstQuestion
-    private String firstAnswer = ".//div[@class='accordion__panel'][%s]";
+    //Локатор для вопросов
+    private String question = ".//div[@class='accordion']/div[%s]/div/div";
+    //Локатор для ответа на вопрос question
+    private String answer = ".//div[@class='accordion']/div[%s]/div[2]/p";
 
     public HomePageQuestion(WebDriver driver){
         this.driver = driver;
@@ -22,12 +22,12 @@ public class HomePageQuestion {
     public void clickCookieButton(){
         driver.findElement(cookieButton).click();
     }
-    //Метод который получает текст из первого вопроса
-    public String clickFirstQuestion(String questionNumber){
-        WebElement firstQuestionElement = driver.findElement(By.xpath(String.format(firstQuestion, questionNumber)));
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", firstQuestionElement);
-        driver.findElement(By.xpath(String.format(firstQuestion, questionNumber))).click();
-        return driver.findElement(By.xpath(String.format(firstAnswer, questionNumber))).getText();
+    //Метод который ищет нужный вопрос и извлекает ответ
+    public String clickQuestion(String questionNumber){
+        WebElement firstQuestionElement = driver.findElement(By.xpath(String.format(question, questionNumber))); //подставляем в локатор номер вопроса
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", firstQuestionElement); //скролим до необходимого вопроса
+        driver.findElement(By.xpath(String.format(question, questionNumber))).click();//кликаем для открытия ответа на вопрос
+        return driver.findElement(By.xpath(String.format(answer, questionNumber))).getText(); //возвращаем ответ на вопрос
     }
 
 }
