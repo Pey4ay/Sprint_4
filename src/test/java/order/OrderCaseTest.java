@@ -1,16 +1,14 @@
-package OrderCase;
+package order;
 
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.List;
 
+import static constants.Url.URL_HOMEPAGE;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
@@ -25,9 +23,8 @@ public class OrderCaseTest {
     private final String daysForRent;
     private final String color;
     private final String comment;
-    private final boolean checkResultTest;
 
-    public OrderCaseTest(String name, String secondName, String address, String telephonenumber, String metroStation, String dateOrder, String daysForRent, String color, String comment, boolean checkResultTest) {
+    public OrderCaseTest(String name, String secondName, String address, String telephonenumber, String metroStation, String dateOrder, String daysForRent, String color, String comment) {
         this.name = name;
         this.secondName = secondName;
         this.address = address;
@@ -37,24 +34,23 @@ public class OrderCaseTest {
         this.daysForRent = daysForRent;
         this.color = color;
         this.comment = comment;
-        this.checkResultTest = checkResultTest;
     }
 
     @Parameterized.Parameters
     public static Object[][] getCities() {
         //Сгенерируй тестовые данные (нам нужно название городов и результат поиска)
         return new Object[][]{
-                {"Иван", "Иванов", "Ленинский", "+79998887766", "Черкизовская ", "30.11.2022", "сутки", "чёрный жемчуг", "Купите по пути колу 0,5", true},
-                {"Петр", "Петров", "Брежневский", "+79997776655", "Черкизовская ", "31.12.2022", "двое суток", "серая безысходность", "Купите по пути спрайт 0,5", true},
+                {"Иван", "Иванов", "Ленинский", "+79998887766", "Черкизовская ", "30.11.2022", "сутки", "чёрный жемчуг", "Купите по пути колу 0,5"},
+                {"Петр", "Петров", "Брежневский", "+79997776655", "Черкизовская ", "31.12.2022", "двое суток", "серая безысходность", "Купите по пути спрайт 0,5"},
         };
     }
 
     @Test
     public void checkActivity() {
-        // драйвер для браузера Chrome
+        // драйвер для браузера FireFox
         driver = new FirefoxDriver();
         // переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(URL_HOMEPAGE);
         //Создаем объекты наших страниц
         HomePage homePage = new HomePage(driver);
         FirstFormOrderPage firstFormOrderPage = new FirstFormOrderPage(driver);
@@ -84,8 +80,8 @@ public class OrderCaseTest {
         finallFormOrderPage.clickYesButtonForOrder();
         //___________________________________________________________
         //Тест будет выполнен, если мы обнаружим форму с сообщением о том, что заказ оформлен
-        List<WebElement> elements = driver.findElements(By.xpath(".//button[text()='Посмотреть статус']"));
-        assertEquals(checkResultTest, elements.size() != 0);
+
+        assertEquals(true, finallFormOrderPage.checkStatusOrder().size() != 0);
     }
     @After
     public void teardown() {
